@@ -1,0 +1,60 @@
+---
+title: "lab_03"
+author: "Cassie Peo"
+date: "2024-02-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Answer questions
+
+Q1: Which five cities have the largest overall Hispanic population in 2020? Name the five cities that had the largest Hispanic population in 2020.
+
+A1:
+
+```{r}
+
+# Write your code in this codeblock.
+
+md_race %>%
+  select(place, x2020_hispanic) %>%
+  slice_max(x2020_hispanic, n = 5)
+
+# your answer here
+
+# The five cities that had the largest Hispanic population in 2020 are Baltimore City, Wheaton CDP, Germantown CDP, Silver Spring CDP, and Aspen Hill CDP. 
+```
+
+Q2: Find the cities with the largest Black population and arrange the results in descending order.
+
+A2:
+
+```{r}
+#write your code here
+
+md_race %>%
+  select(place, x2020_black) %>%
+  arrange(desc(x2020_black))
+
+# your answer here
+
+# The city with the largest Black population is Baltimore City, followed by Waldorf CDP, then Bowie city. See the code for the rest. 
+
+```
+
+Q3: Create a table called top_hispanic that shows the top 15 communities with the largest Hispanic population in 2020, and also display the 2010 Hispanic population and the total community population for 2020. Look at your results - what stands out to you? Craft a one-paragraph story pitch for your editor.
+
+A3:
+
+```{r}
+
+top_hispanic <- md_race %>%
+  select(place, x2020_hispanic, x2010_hispanic, x2020_total) %>%
+  slice_max(x2020_hispanic, n = 15)
+
+# your answer here
+# For this story, I would investigate why the Hispanic population in Baltimore city increased faster compared to other cities from 2010 to 2020. From 2010 to 2020, the Hispanic population in Baltimore city increased by about 43%. I would want to go into Baltimore city to investigate what changes could have led to this increase and would look at changes in city laws and policies between 2010 and 2020, like immigration policies. I would look at individual communities in Baltimore city and see if there are certain areas of the city that are most responsible for this increase in the Hispanic population from 2010 to 2020. I would also want to ask community members what they might attribute the change to.  
+```
