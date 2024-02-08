@@ -12,13 +12,16 @@ help.start()
 
 ### Install software to grab data
 
-    Tidyverse: Eight separate software packages to perform
-    data import, tidying, manipulation, visualisation, and            programming
+```         
+Tidyverse: Eight separate software packages to perform
+data import, tidying, manipulation, visualisation, and            programming
 
-    Rio: Easy importing features 
-    Janitor: Data cleaning
+Rio: Easy importing features 
+Janitor: Data cleaning
+```
 
 You should have installed tidyverse already. If not, then delete the hashtag in front of install.packages("tidyverse") and run the code chunk at line 22.
+
 ```{r}
 #install.packages("tidyverse")
 install.packages("rio") 
@@ -39,21 +42,24 @@ Check to see what's installed by clicking on "Packages" tab in File Manager, low
 
 We will work with a dataset of MediaSalaries that I cleaned and modified slightly in March 2022 for this tutorial. Some of the detail has been removed so we can make calculations. This MediaSalaries sheet was a crowdsourced project involving reporters worldwide to share information about salaries and benefits. Open this [file in Google Sheets](https://docs.google.com/spreadsheets/d/1jkbQFwIdaWv8K00Ad6Wq7ZxFTUPFQA-g/edit#gid=1655992481)
 
-    1) Select Salaries tab
+```         
+1) Select Salaries tab
 
-    IRE Old School: Four Corners Test!
-    13 Columns
-    1658 Rows
+IRE Old School: Four Corners Test!
+13 Columns
+1658 Rows
 
-    Numberic data in Salary, Years Experience
-    Mixed string data in Gender Identity / Ethnicity, Job duties
+Numberic data in Salary, Years Experience
+Mixed string data in Gender Identity / Ethnicity, Job duties
+```
 
 <br> <br>
 
 ### Import Data
 
-
-    We'll now load this data into R. You can load spreadsheets from the Internet as follows:
+```         
+We'll now load this data into R. You can load spreadsheets from the Internet as follows:
+```
 
 ```{r}
 MediaBucks <- rio::import("https://docs.google.com/spreadsheets/d/1jkbQFwIdaWv8K00Ad6Wq7ZxFTUPFQA-g/edit#gid=1655992481", which = "RealMediaSalaries2")
@@ -157,22 +163,26 @@ quantile(MediaBucks$Salary, c(0.25, 0.50, 0.75, 0.9, 0.99), na.rm=TRUE)
 
 ### Navigation Tips
 
-    Shortcut Commands
-    Tab - Autocomplete
-    In Console Window (lower left) 
-    --Control (or Command) + UP arrow - last lines run
-    Control (or Command) + Enter - Runs current or selected lines of code in the top left box of RStudio
-    Shift + Control (or Command) +P - Reruns previous region code
+```         
+Shortcut Commands
+Tab - Autocomplete
+In Console Window (lower left) 
+--Control (or Command) + UP arrow - last lines run
+Control (or Command) + Enter - Runs current or selected lines of code in the top left box of RStudio
+Shift + Control (or Command) +P - Reruns previous region code
+```
 
 <br> <br>
 
 ### Dplyr
 
-    dplyr has many tools for data analysis   
-    select Choose which columns to include  
-    filter Filter the data 
-    arrange Sort the data, by size for continuous variables, by date, or alphabetically 
-    group_by Group the data by a categorical variable 
+```         
+dplyr has many tools for data analysis   
+select Choose which columns to include  
+filter Filter the data 
+arrange Sort the data, by size for continuous variables, by date, or alphabetically 
+group_by Group the data by a categorical variable 
+```
 
 <br>
 
@@ -211,9 +221,8 @@ MediaSalary <- MediaBucks %>%
   filter(Salary >= 1000)
 ```
 
+Just give me a list of the top 10 salaries and companies: use slice_max. slice_max and slice_min are features in the Dplyr library (part of Tidyverse) that produce quick summary tables. See what else you can do with [the slice commands.](https://dplyr.tidyverse.org/reference/slice.html)
 
-Just give me a list of the top 10 salaries and companies: use slice_max.
-slice_max and slice_min are features in the Dplyr library (part of Tidyverse) that produce quick summary tables. See what else you can do with [the slice commands.](https://dplyr.tidyverse.org/reference/slice.html)
 ```{r}
 MediaBucks %>% 
   select(COMPANY, Salary) %>% 
@@ -221,12 +230,13 @@ MediaBucks %>%
 
 ```
 
-
 Questions:
 
-    1: View the range of your data    
-    2: Number of rows  
-    3: Number of rows cut with filter  
+```         
+1: View the range of your data    
+2: Number of rows  
+3: Number of rows cut with filter  
+```
 
 <br>
 
@@ -269,10 +279,12 @@ summary(Reporters$Salary)
 
 Questions:
 
-    1: Who is making $230,504 as a reporter???   
-    2: Make a table for editors, figure out medians.   
-    3: Find highest paid editor. Resent them.   
-    4: Make a table for any position involving data  
+```         
+1: Who is making $230,504 as a reporter???   
+2: Make a table for editors, figure out medians.   
+3: Find highest paid editor. Resent them.   
+4: Make a table for any position involving data  
+```
 
 Table with Black reporters at Wall Street Journal
 
@@ -290,7 +302,6 @@ Race <- MediaBucks %>%
   arrange(desc(Avg_Salary))
 Race
 ```
-
 
 Wait! What are the totals by race?
 
@@ -317,7 +328,6 @@ MediaBucks %>%
 
 Let's make a simple chart of our salaries by race.
 
-
 ```{r}
 Race %>% 
 ggplot(aes(x = Race, y = Avg_Salary, fill = Avg_Salary)) +
@@ -331,42 +341,65 @@ ggplot(aes(x = Race, y = Avg_Salary, fill = Avg_Salary)) +
 
 ```
 
-This is a basic chart using ggplot. To break down the code:
--  These lines: Race %>% ggplot(aes(x = Race, y = Avg_Salary, fill = Avg_Salary)) +  -- Uses the Race table, calls the ggplot program, assigns the x axis to Race, y axis to Avg_Salary and fills the color according to Avg_Salary
--   These lines:  geom_col(position = "dodge") + 
-  theme(legend.position = "none") +  -- creates a chart of columns, and removes a legend box.
--  These lines:  labs(title =  Assign the headline and captions.
+This is a basic chart using ggplot. To break down the code: - These lines: Race %\>% ggplot(aes(x = Race, y = Avg_Salary, fill = Avg_Salary)) + -- Uses the Race table, calls the ggplot program, assigns the x axis to Race, y axis to Avg_Salary and fills the color according to Avg_Salary - These lines: geom_col(position = "dodge") + theme(legend.position = "none") + -- creates a chart of columns, and removes a legend box. - These lines: labs(title = Assign the headline and captions.
 
 ### What You Have Learned So Far
 
-    How to navigate in R studio   
-    How to install libraries and packages    
-    How to import a .xlsx file into R   
-    How to obtain summary statistics (summary)   
-    How to build basic tables from a dataset   
-    How to conduct filter queries from a dataset   
+```         
+How to navigate in R studio   
+How to install libraries and packages    
+How to import a .xlsx file into R   
+How to obtain summary statistics (summary)   
+How to build basic tables from a dataset   
+How to conduct filter queries from a dataset   
+```
 
 ### Questions
 
-    1: Build a table for NewYorkTimes employees, and determine median salary of NewYorkTimes employees   
-```{r}
-#your answer here
+```         
+1: Build a table for NewYorkTimes employees, and determine median salary of NewYorkTimes employees   
 ```
-
-
-      2: Identify title, gender and race of the highest paid position at NYT  
-```{r}
-#your answer here
-```
-
-
-    3: Search for Bloomberg,  check median salary, compare to NYT results above.
 
 ```{r}
 #your answer here
-
+ nyt = MediaBucks %>% 
+  filter(COMPANY %in% c("NewYorkTimes", "NYT"))
+ 
+ median(nyt$Salary)
+ # The median is $52000
 ```
 
+```         
+  2: Identify title, gender and race of the highest paid position at NYT  
+```
+
+```{r}
+#your answer here
+#max(nyt$Salary)
+
+high_paid_employee = nyt %>%
+  filter(Salary == max(nyt$Salary))
+
+high_paid_employee$TITLE
+high_paid_employee$Gender
+high_paid_employee$Race
+
+# The highest paid position at NYT holds the title "Executive Editor, News". Their gender is listed as "noanswer". Their race is "black".
+```
+
+```         
+3: Search for Bloomberg,  check median salary, compare to NYT results above.
+```
+
+```{r}
+#your answer here
+bb = MediaBucks %>% 
+  filter(COMPANY %in% c("Bloomberg", "BloombergNews", "Bloomberg Law"))
+ 
+ median(bb$Salary)
+ 
+# The median salary at Bloomberg is $50000. This is $2000 less compared to the New York Times. 
+```
 
 ### Tutorials
 
@@ -382,7 +415,7 @@ Aldhous' R tutorial http://paldhous.github.io/NICAR/2018/r-analysis.html
 
 Ron Campbell Lecture https://github.com/roncampbell/NICAR2018/blob/master/Intro%20to%20R.md
 
-Excellent Tutorial Spelling out Excel and Comparable Commands in R https://trendct.org/2015/06/12/r-for-beginners-how-to-transition-from-excel-to-r/ https://docs.google.com/presentation/d/1O0eFLypJLP-PAC63Ghq2QURAnhFo6Dxc7nGt4y_l90s/edit#slide=id.g1bc441664e_0\_59
+Excellent Tutorial Spelling out Excel and Comparable Commands in R https://trendct.org/2015/06/12/r-for-beginners-how-to-transition-from-excel-to-r/ https://docs.google.com/presentation/d/1O0eFLypJLP-PAC63Ghq2QURAnhFo6Dxc7nGt4y_l90s/edit#slide=id.g1bc441664e_0_59
 
 Andrew Ba Tran first Data Analysis Steps Using R https://docs.google.com/presentation/d/1O0eFLypJLP-PAC63Ghq2QURAnhFo6Dxc7nGt4y_l90s/edit#slide=id.p
 

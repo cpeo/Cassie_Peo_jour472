@@ -1,0 +1,57 @@
+---
+title: "pre_lab_03"
+author: "Cassie Peo"
+date: "2024-02-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Questions
+
+```         
+1: Build a table for NewYorkTimes employees, and determine median salary of NewYorkTimes employees   
+```
+
+```{r}
+#your answer here
+ nyt = MediaBucks %>% 
+  filter(COMPANY %in% c("NewYorkTimes", "NYT"))
+ 
+ median(nyt$Salary)
+ # The median is $52000
+```
+
+```         
+  2: Identify title, gender and race of the highest paid position at NYT  
+```
+
+```{r}
+#your answer here
+#max(nyt$Salary)
+
+high_paid_employee = nyt %>%
+  filter(Salary == max(nyt$Salary))
+
+high_paid_employee$TITLE
+high_paid_employee$Gender
+high_paid_employee$Race
+
+# The highest paid position at NYT holds the title "Executive Editor, News". Their gender is listed as "noanswer". Their race is "black".
+```
+
+```         
+3: Search for Bloomberg,  check median salary, compare to NYT results above.
+```
+
+```{r}
+#your answer here
+bb = MediaBucks %>% 
+  filter(COMPANY %in% c("Bloomberg", "BloombergNews", "Bloomberg Law"))
+ 
+ median(bb$Salary)
+ 
+# The median salary at Bloomberg is $50000. This is $2000 less compared to the New York Times. 
+```
