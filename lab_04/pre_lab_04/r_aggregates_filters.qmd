@@ -358,6 +358,6 @@ count / 200 * 100
 # 53% 
 ```
 
-Tweet: According to the Census, 53% of Baltimore City census districts have a median household income less than the median household income for the entire city.
+Tweet: According to the Census, 53% of Baltimore City census districts have a median household income that is less than the median household income for the entire city.
 
 \`\`\`
