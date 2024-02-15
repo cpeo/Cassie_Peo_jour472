@@ -1,6 +1,6 @@
 #Lab_04 {lab_04}
 
-rob wells, 8/14/2021
+rob wells, 2/13/2024
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -13,9 +13,11 @@ options(scipen=999)
 
 # Load the tidyverse here
 
+library(tidyverse)
+
 # Load janitor here
 
-
+library(janitor)
 
 ```
 
@@ -36,6 +38,8 @@ Background on this data from [Social Explorer](https://www.socialexplorer.com/da
 # Write code to load the Maryland race by city, place for 2010 - 2020 and call it md_race.
 # The data is called lab_03.csv, and is in the same folder as lab_03.qmd (this data notebook)
 
+md_race <- read_csv("lab_03.csv")
+
 ```
 
 ## Answer questions
@@ -46,7 +50,10 @@ A1:
 ```{r}
 
 # Write your code in this codeblock.
-
+top5_hispanic <- md_race %>%
+  select(place, x2020_hispanic, x2020_total) %>%
+  mutate(top5_hispanic =(x2020_hispanic/x2020_total)*100) %>%
+  slice_max(x2020_hispanic, n = 5)
 
 
 ```
@@ -57,8 +64,15 @@ A2:
 
 ```{r}
 #write your code here
+pct_black <- md_race %>%
+  select(place, x2010_black, x2010_total, x2020_black, x2020_total) %>%
+  filter(x2010_total >20000) %>%
+  mutate(x2010_pct_black =(x2010_black/x2010_total)*100) %>%
+  mutate(x2020_pct_black =(x2020_black/x2020_total)*100) %>%
+  mutate(difference =(x2020_pct_black-x2010_pct_black)) %>%
+  slice_max(x2020_pct_black, n = 10)
 
-
+# Comparing the results for 2020 vs 2010, the city with the largest Black population as a percentage of the overall population, Suitland went from being 92.3% Black to 87.6% Black from 2010 to 2020. Out of the top 10 cities with the largest Black population percentage, Landover, Fort Washington, Suitland, Lochearn, and Baltimore city's Black population percentages all decreased from 2010 to 2020, with Landover experiencing the most drastic decrease with a difference of -8.9. However, Waldorf's Black population percentage increased from 50.8% in 2010 to 61.6% in 2020, a difference of +10.8.
 
 ```
 
@@ -67,7 +81,13 @@ Q3: Find the 15 communities that had the great gains in Hispanic population from
 A3:
 
 ```{r}
+hisp_growth <- md_race %>%
+  select(place, x2010_hispanic, x2010_total, x2020_hispanic, x2020_total) %>%
+  filter(x2020_total >10000) %>%
+  mutate(pct_change_hisp =((x2020_hispanic-x2010_hispanic)/x2010_hispanic)*100) %>%
+  mutate(community_pct_change =((x2020_total-x2010_total)/x2010_total)*100) %>%
+  slice_max(pct_change_hisp, n = 15)
 
-
+# The top 15 communities that had the greatest gains in Hispanic population from 2010 to 2020 all increased by over 150%. However, North Laurel had the largest with a 1186.7% increase in the Hispanic population from 2010 to 2020, and had the largest percent change for the community's overall growth  with an increase of 509.8%. For this story, I would want to look into why North Laurel had such a large increase in the Hispanic population from 2010 to 2020. I would look into any changes in laws, like immigration laws, in the area from 2010 to 2020, and would also want to look at any changes in housing or industry in the area. I would also want to look at why the community overall grew by 509.8% and would want to talk to people in various neighborhoods in the area about why they think both the community's population overall, and the Hispanic population, grew so drastically from 2010 to 2020. 
 
 ```

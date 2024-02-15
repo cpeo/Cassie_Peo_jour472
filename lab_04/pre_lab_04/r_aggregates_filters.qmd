@@ -360,4 +360,37 @@ count / 200 * 100
 
 Tweet: According to the Census, 53% of Baltimore City census districts have a median household income that is less than the median household income for the entire city.
 
-\`\`\`
+```{r}
+#Use the baltcity_race table, use the mutate command to create a new variable called ratio_w_b which will be the 2020 black population by census tract divided into the 2020 white population. Sort in descending order, highest to lowest
+
+ratiowb <- baltcity_race %>%
+  select(census_tract, x2020_black, x2020_white) %>%
+  mutate(ratio_w_b =(x2020_black/x2020_white)) %>%
+  filter(x2020_white > 0) %>%
+  arrange(desc(ratio_w_b))
+head(ratiowb)
+
+```
+```{r}
+baltcity_race %>%
+  select(census_tract, x2020_black, x2020_white) %>%
+  mutate(ratio_w_b = round(x2020_black/x2020_white,2)) %>%
+  arrange(desc(ratio_w_b))
+```
+```{r}
+baltcity_race %>%
+  select(census_tract, x2020_black, x2020_white) %>%
+  mutate(ratio_w_b = round(x2020_black/x2020_white,2)) %>%
+  arrange(desc(ratio_w_b))
+
+sum(baltcity_race$x2020_white, na.rm = TRUE)
+```
+
+```{r}
+baltcity_race %>%
+  select(census_tract, x2020_white) %>%
+  mutate(pct_white =(x2020_white/sum(baltcity_race$x2020_white, na.rm = TRUE))) %>%
+  arrange(desc(pct_white))
+
+```
+
