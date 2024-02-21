@@ -38,9 +38,16 @@ Background on this data from [Social Explorer](https://www.socialexplorer.com/da
 # Write code to load the Maryland race by city, place for 2010 - 2020 and call it md_race.
 # The data is called lab_03.csv, and is in the same folder as lab_03.qmd (this data notebook)
 
-md_race <- read_csv("lab_03.csv")
-
+md_race <- read_csv("lab_04.csv")
+md_race_with_totals = janitor::adorn_totals(md_race)
 ```
+```{r}
+install.packages("devtools")
+devtools::install_github("hrbrmstr/taucharts")
+library(taucharts)
+tauchart(md_race) %>% tau_point("x2010_white", "x2020_black") %>% tau_tooltip() %>% tau_trendline()
+```
+
 
 ## Answer questions
 
@@ -52,9 +59,8 @@ A1:
 # Write your code in this codeblock.
 top5_hispanic <- md_race %>%
   select(place, x2020_hispanic, x2020_total) %>%
-  mutate(top5_hispanic =(x2020_hispanic/x2020_total)*100) %>%
+  mutate(top5_hispanic =(x2020_hispanic/x2020_total)) %>%
   slice_max(x2020_hispanic, n = 5)
-
 
 ```
 
