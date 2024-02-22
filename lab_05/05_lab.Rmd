@@ -1,61 +1,9 @@
-#Lab_05  {lab_05}
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## About this lab
-
-To complete this lab, you need to:
-* run existing code as directed (look for **Task**).
-* modify existing code as directed (look for **Task**).
-* write code in empty codeblocks provided to answer questions included (look for **Q**).
-* write out the answer in the form of a complete sentence in the space given (look for **A**).
-
-When you are finished, commit changes and push to your personal GitHub repo, then submit the URL to this document on ELMS.
-
-## Load libraries and establish settings
-
-You'll need to load two packages for this: the tidyverse and janitor.
-
-**Task** load these two packages.
-
-```{r}
-# Turn off scientific notation
-options(scipen=999)
-
-library(tidyverse)
-
-library(janitor)
-
-```
-
-### Load Life Expectancy Data
-
-You'll need to load :
-
-CDC_Life_Census_Tract_2010_2015.csv
-
-It is included in your lab_05.zip file.
-
-About the data: 
-Life Expectancy at Birth for U.S. States and [Census Tracts, 2010-2015](https://www.cdc.gov/nchs/data-visualization/life-expectancy/index.html) 
-
-It shows estimates of U.S. life expectancy at birth by state and census tract for the period 2010-2015. Estimates were produced for 67,148 census tracts, covering all states and the District of Columbia (D.C.). These estimates come from the National Center for Health Statistics (NCHS), the National Association for Public Health Statistics and Information Systems (NAPHSIS), and the Robert Wood Johnson Foundation (RWJF).
-
-
-**Task** Create a codeblock below this task, then load the data sets and assign them to appropriate variable names. 
-
-```{r}
-
-CDC_Life_Census_Tract_2010_2015 <- read_csv("CDC_Life_Census_Tract_2010_2015.csv") %>% 
-  as.data.frame()
-
-
-```
-
-## Answer questions
-
+---
+title: "lab_05_answers"
+author: "Cassie Peo"
+date: "2024-02-22"
+output: html_document
+---
 **Q1.** In your lab_05 folder, there is a csv called CDC_Life_Census_Tract_2010_2015.csv.  It contains all of the life expectancy data for the United States.
 
 You are going to examine this data and learn the range of death rates in Baltimore and then in Maryland in general.
@@ -207,5 +155,3 @@ life_exp_above <- life_exp_above_below %>%
 # From this dataset, I found that the average life expectancy in Baltimore is 73.04 years. Out of the 200 census tracts in Baltimore city, 87 of them were above the average life expectancy, while the remaining 113 are below the average life expectancy in Baltimore city. 
 
 ```
-
-
