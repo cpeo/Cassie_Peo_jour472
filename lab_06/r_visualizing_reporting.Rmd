@@ -24,7 +24,13 @@ arrest <- arrest %>%
   count(disposition)
 
 # 2018 had the most arrests with 159 arrests. 
+```
 
+```{r}
+# correct answer: 
+arrest <- SF %>%
+  filter(disposition == "ARR") %>%
+  count(year)
 ```
 
 
@@ -43,7 +49,20 @@ arrest %>%
     y = "total arrests",
     caption = "2018 had the most arrests with 159 arrests.
     Source: SF PD Service Call Data, 2016-2019")
+```
 
+```{r}
+# correct answer:
+
+ggplot(arrest, aes(year, n, fill = n)) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label=n), vjust = -.1, size = 2.5) +
+  labs(
+    title="311 Calls Resulted in Arrests in San Francisco, 2016-2019",
+    x = "year",
+    y = "total arrests",
+    caption = "2018 had the most arrests with 159 arrests.
+    Source: SF PD Service Call Data, 2016-2019")
 
 ```
 
@@ -65,6 +84,15 @@ top12_all_dispo <- all_dispo %>%
   slice_max(n, n=12)
 
 # Code HAN, or "Handled" is the most common resolution for 311 calls, with 51,064 handled resolutions. The second most common resolution is ADV or "Advised," with 49,823 advised resolutions. The third most common resolution is GOA or "Gone on Arrival," with 31,951 resolutions. The top 12 resolution codes in order from most to least common are HAN, ADV, GOA, CIT, UTL, Not recorded, ND, CAN, ADM, REP, NOM, and ARR. 
+```
+
+```{r}
+# correct answer:
+
+all_dispo <- SF %>% 
+  select(year, disposition) %>% 
+  count(disposition) %>%
+  slice_max(n, n=12)
 
 ```
 
@@ -88,6 +116,20 @@ top12_all_dispo %>%
     source: SF PD Service Call Data, 2016-2019")
 
 
+```
+
+```{r}
+# correct answer:
+
+ggplot(all_dispo, aes(disposition, n, fill = n)) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label=n), vjust = -.1, size = 2.5) +
+  labs(
+    title="The Top 12 Most Common Resolutions for 311 Calls",
+    x = "disposition",
+    y = "number of instances",
+    caption = "Code HAN, or Handled is the most common resolution for 311 calls, with 51,064 handled resolutions.  
+    source: SF PD Service Call Data, 2016-2019")
 
 ```
 
@@ -110,5 +152,34 @@ top12_all_dispo %>%
     caption = "Code HAN, or Handled is the most common resolution for 311 calls, with 51,064 handled resolutions.  
     source: SF PD Service Call Data, 2016-2019")
 
+
+```
+
+```{r}
+# correct answer:
+all_dispo %>%
+  ggplot() +
+  geom_bar(aes(x=reorder(disposition, -n), weight=n, fill=n)) +
+  labs(
+    title="The Top 12 Most Common Resolutions for 311 Calls",
+    x = "disposition",
+    y = "number of instances",
+    caption = "Code HAN, or Handled is the most common resolution for 311 calls, with 51,064 handled resolutions.  
+    source: SF PD Service Call Data, 2016-2019")
+
+#OR:
+
+SF %>% 
+  select(disposition) %>% 
+  count(disposition) %>%
+  slice_max(n, n=12) %>%
+  ggplot() +
+  geom_bar(aes(x=reorder(disposition, -n), weight=n, fill=n)) +
+  labs(
+    title="The Top 12 Most Common Resolutions for 311 Calls",
+    x = "disposition",
+    y = "number of instances",
+    caption = "Code HAN, or Handled is the most common resolution for 311 calls, with 51,064 handled resolutions.  
+    source: SF PD Service Call Data, 2016-2019")
 
 ```
