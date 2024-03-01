@@ -1,7 +1,8 @@
 ---
-title: "A1_draft_notebook"
+title: "Assignment 1 Draft Notebook"
 author: "Cassie Peo"
-format: html
+date: "2024-02-29"
+output: html_document
 ---
 
 For this assignment, I would like to examine the demographics of Baltimore’s top and bottom 10% wealthiest neighborhoods. In this course, we have already worked with Maryland and Baltimore income and race data, and I am interested in seeing how the demographics, like race and gender, differ in these neighborhoods. I want to use the datasets ‘baltcity_income_clean’ and ‘baltcity_race’ that we have already worked with to answer the question “how do the demographics of Baltimore’s top 10% wealthiest neighborhoods compare to the demographics of Baltimore’s bottom 10% wealthiest neighborhoods?” Then, I found a dataset about female-headed households in Baltimore and am interested in exploring how the numbers of female-headed households differ in the wealthiest and poorest neighborhoods in Baltimore to answer questions like “are there more female-headed households in lower income areas?” and “what is the percentage of female-headed households in Baltimore’s top and bottom 10% wealthiest neighborhoods?”
@@ -53,6 +54,7 @@ updated_baltcity_race <- baltcity_income %>%
   inner_join(baltcity_race, by="geoid")
 ```
 
+
 Questions:
 
 1. What is the percentage of non-white residents in Baltimore’s top 10% wealthiest neighborhoods?
@@ -64,14 +66,9 @@ updated_baltcity_race %>%
   select(x2020_nonwhite, neighborhood, x2020) %>%
 arrange(desc(x2020))
 
-top20_baltcity <- updated_baltcity_race %>%
-  slice_max(x2020, n = 20) %>%
-  mutate(x2020_nonwhite=((x2020_total-x2020_white)/x2020_total)) %>%
-  select(x2020_nonwhite, neighborhood, x2020) %>%
-arrange(desc(x2020))
-
 # As the code above shows, the percentage of non-white residents in Baltimore’s wealthiest neighborhood, North Baltimore/Guilford/Homeland, is 38.1%. Baltimore's second wealthiest neighborhood, North Baltimore/Guilford/Homeland, has 23.42% non-white residents. The third wealthiest neighborhood, Greater Roland Park/Poplar Hill, has a percentage of 33.24% non-white residents. The fourth wealthiest neighborhood, South Baltimore, has 11.51% non-white residents, and the fifth wealthiest neighborhood, Canton, has 13.15% non-white residents.
 ```
+
 1a. Bar chart of the top 10% wealthiest neighborhoods in Baltimore.
 ```{r}
 
@@ -91,6 +88,8 @@ ggplot(top5_baltcity, aes(neighborhood, x2020, fill = x2020)) +
     caption = "North Baltimore/Guilford/Homeland, North Baltimore/Guilford/Homeland, 
     and Greater Roland Park/Poplar Hill are the top three wealthiest neighborhoods.  
     source: baltcity_income_clean.csv")
+
+# As the code above shows, Baltimore’s wealthiest neighborhood is North Baltimore/Guilford/Homeland. Baltimore's second wealthiest neighborhood is North Baltimore/Guilford/Homeland. The third wealthiest neighborhood is Greater Roland Park/Poplar Hill. The fourth wealthiest neighborhood is South Baltimore and the fifth wealthiest neighborhood is Canton.
 
 ```
 
@@ -123,6 +122,7 @@ top_10_mean - bottom_10_mean
 
 # As shown by the code above, the average income of the top 10% is $109496.40 more than the average income of the bottom 10%. The top 10% on average earns 5.26 times more than the bottom 10% on average.  
 ```
+
 
 4. What is the percentage of female-headed households in Baltimore’s top and bottom 10% wealthiest neighborhoods?
 
