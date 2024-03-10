@@ -1,0 +1,66 @@
+---
+title: "r_join_bind"
+author: "Cassie Peo"
+date: "2024-03-9"
+output: html_document
+---
+
+**Question #1:**
+
+Import maryland_tracts.xls and then md_counties_geoids.txt Perform an
+inner_join on maryland_tracts and md_counties on the common identifier.
+
+TIP: when the columns you want to join have different names: table1 %\>%
+inner_join(table2, by=c("table1_column"="table2_column"))
+
+Name the new table "md_smith_data"
+
+```{r}
+library(readxl)
+maryland_tracts <- read_excel("maryland_tracts.xls")
+
+md_counties_geoids <- read_tsv("md_counties_geoids.txt")
+
+md_smith_data <- maryland_tracts %>%
+  inner_join(md_counties_geoids, by=c("cty"="GEOID"))
+
+
+```
+
+With your maryland_smith_data table, produce a summary table showing the
+county name and the average census response rate for 2020. arrange the
+table in descending order. Identify the county with the highest average
+census response rate for 2020 and the county with the lowest.
+
+```{r}
+
+md_smith_data %>%
+  group_by(NAME) %>%
+  summarise(avg = mean(census_response_rate2020, na.rm=TRUE)) %>%
+  arrange(desc(avg))
+
+# The county with the highest average census response rate for 2020 was Howard County with an average census response rate of 81.9%. The county with the lowesr average census response rate for 2020 was Worcester County with an average census response rate of 50.5%.
+
+```
+
+**Question #2:** Answer this question in English: Write in Elms
+
+You have a dataframe that contains information on the population of each
+Maryland county, structured like this example (the column headers and
+one example row):
+
+geoid \| name \| total_pop 24029 \| Kent County, Maryland \| 19456
+
+You have another dataframe with a count of large employers (over 10000
+workers) by county in Maryland, structured like this example (the column
+headers and one example row):
+
+name \| number_of_large_employers Kent County \| 15
+
+You want to join these two dataframes to answer the question "which
+Maryland county has the highest number of large employees per person?"
+
+What do you think will happen when you attempt to "inner_join" these two
+tables?
+
+Answer: If I were to use "inner_join" on these two tables, I would join them by the column "name" and it would combine the two dataframes. The "name" column from both dataframes would combine and we would get a table with columns "geoid," "name," "total_pop," and "number_of_large_employers." However, there could be issues using "inner_join" because in the first table, the "name" column has the county name plus ", Maryland" while the second table only has the county name. Since they arent exactly the same, it wont treat them as equal values. 
