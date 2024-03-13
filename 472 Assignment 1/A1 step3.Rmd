@@ -1,8 +1,22 @@
 ---
-title: "A1_Notebook"
+title: 'Assignment 1, Step #3'
 author: "Cassie Peo"
-format: html
+date: "2024-03-13"
+output: html_document
 ---
+
+For this assignment, I examined the demographics of Baltimore’s top and bottom 10% wealthiest neighborhoods. In this course, we have already worked with Maryland and Baltimore income and race data, and I was interested in seeing how the demographics, like race and gender, differ in these neighborhoods. I used the datasets ‘baltcity_income_clean’ and ‘baltcity_race’ that we have already worked with to answer the question “how do the demographics of Baltimore’s top 10% wealthiest neighborhoods compare to the demographics of Baltimore’s bottom 10% wealthiest neighborhoods?” Then, I used a dataset about female-headed households in Baltimore to explore how the numbers of female-headed households differ in the wealthiest and poorest neighborhoods in Baltimore. I aimed to answer questions like “are there more female-headed households in lower income areas?” and “what is the percentage of female-headed households in Baltimore’s top and bottom 10% wealthiest neighborhoods?”
+Using these datasets, I found that the percentage of non-white residents in Baltimore’s wealthiest neighborhood, North Baltimore/Guilford/Homeland, is 38.1%. Baltimore's second wealthiest neighborhood, North Baltimore/Guilford/Homeland, has 23.42% non-white residents. The third wealthiest neighborhood, Greater Roland Park/Poplar Hill, has a percentage of 33.24% non-white residents. 
+The percentage of non-white residents in Baltimore’s poorest neighborhood, Upton/Druid Heights, is 90.55%. Sandtown-Winchester/Harlem Park the second poorest neighborhood's percentage of non-white residents is 96.22%, and the third poorest neighborhood, Southwest Baltimore, has a percentage of 69.8% non-white residents.
+In the income data, the most recent year was 2020, but the female-headed household data had data for years 2010, 2015, 2016, 2017, 2018, 2019, and 2021. There was no data for 2020, so I used the data from 2021 for the percentage of female-headed households calculations and graphics. 
+The percentage of female-headed households in Baltimore’s top 10% wealthiest neighborhoods is 22.06%. The percentage of female-headed households in Baltimore’s bottom 10% wealthiest neighborhoods is 66.82%. 
+Harbor East/Little Italy had the highest percentage of female-headed households in the top 10% wealthiest neighborhoods in Baltimore with 71.4% female-headed households. Highlandtown had the second highest, with 35.9%, and Patterson Park North & East had the third highest with 34.2% female-headed households. 
+Upton/Druid Heights had the highest percentage of female-headed households in the bottom 10% wealthiest neighborhoods in Baltimore with 86.6% female-headed households. Upton/Druid Heights also had the highest percentage of non-white residents -- 90.55%. Cherry Hill had the second highest percentage of female-headed households with 81% and Westport/Mount Winans/Lakeland had the third highest with 73.1%. 
+It is very interesting to me that most of the neighborhoods in Baltimore’s top 10% wealthiest neighborhoods had less than 36% female-headed households while Harbor East/Little Italy had the highest percentage of female-headed households with 71.4%. For a story, I would like to further investigate why this is and what factors make Harbor East/Little Italy different from the rest of the top 10% wealthiest neighborhoods. I would want to talk to people in Harbor East/Little Italy, as well as the rest of the top 10% wealthiest neighborhoods. 
+
+Tweet 1: In the bottom 10% wealthiest neighborhoods in Baltimore, Upton/Druid Heights had the highest percentage of female-headed households with 86.6% female-headed households, and the highest percentage of non-white residents at 90.55%.
+
+Tweet 2: The top 10% wealthiest neighborhoods in Baltimore, on average, earn 5.26 times more than the bottom 10% on average. The average income of the top 10% is $109496.40 more than the average income of the bottom 10%. 
 
 Topic: 
 How do the demographics of Baltimore’s top 10% wealthiest neighborhoods compare to the demographics of Baltimore’s bottom 10% wealthiest neighborhoods?
@@ -24,7 +38,6 @@ library(dplyr)
 
 library(stringr)
 ```
-
 
 Load in data:
 ```{r}
@@ -70,7 +83,9 @@ arrange(desc(x2020))
 
 # As the code above shows, the percentage of non-white residents in Baltimore’s wealthiest neighborhood, North Baltimore/Guilford/Homeland, is 38.1%. Baltimore's second wealthiest neighborhood, North Baltimore/Guilford/Homeland, has 23.42% non-white residents. The third wealthiest neighborhood, Greater Roland Park/Poplar Hill, has a percentage of 33.24% non-white residents. The fourth wealthiest neighborhood, South Baltimore, has 11.51% non-white residents, and the fifth wealthiest neighborhood, Canton, has 13.15% non-white residents.
 ```
+
 1a. Bar chart of the top 10% wealthiest neighborhoods in Baltimore.
+
 ```{r}
 
 top5_baltcity <- updated_baltcity_race %>%
@@ -109,7 +124,6 @@ arrange(x2020)
 # As the code above shows, the percentage of non-white residents in Baltimore’s poorest neighborhood, Upton/Druid Heights, is 90.55%. Sandtown-Winchester/Harlem Park the second poorest neighborhood's percentage of non-white residents is 96.22%, and the third poorest neighborhood, Southwest Baltimore, has a percentage of 69.8% non-white residents. 
 ```
 
-
 3. What is the average income difference between these two sets of neighborhoods?
 
 ```{r}
@@ -126,6 +140,7 @@ top_10_mean - bottom_10_mean
 
 # As shown by the code above, the average income of the top 10% is $109496.40 more than the average income of the bottom 10%. The top 10% on average earns 5.26 times more than the bottom 10% on average.  
 ```
+
 
 4. What is the percentage of female-headed households in Baltimore’s top and bottom 10% wealthiest neighborhoods?
 
@@ -153,7 +168,9 @@ mean(bottom_pcts$femhhs21)
 # As the code above shows, the percentage of female-headed households in Baltimore’s top 10% wealthiest neighborhoods is 22.06%. The percentage of female-headed households in Baltimore’s bottom 10% wealthiest neighborhoods is 66.82%. 
 
 ```
+
 4a. Bar chart of the percentage of female-headed households in top 10% wealthiest neighborhoods in Baltimore.
+
 ```{r}
 ggplot(top_pcts, aes(reorder(neighborhood, femhhs21), femhhs21, fill = femhhs21)) +
   coord_flip() +
@@ -190,4 +207,3 @@ ggplot(bottom_pcts, aes(reorder(neighborhood, femhhs21), femhhs21, fill = femhhs
 # As the code above shows, Upton/Druid Heights had the highest percentage of female-headed households in the bottom 10% wealthiest neighborhoods in Baltimore with 86.6% female-headed households. Cherry Hill had the second highest percentage of female-headed households with 81% and Westport/Mount Winans/Lakeland had the third highest with 73.1%.
 
 ```
-

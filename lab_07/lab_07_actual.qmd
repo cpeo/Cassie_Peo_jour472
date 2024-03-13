@@ -12,7 +12,32 @@ When you are finished, commit changes and push to your personal GitHub repo, the
 ## Load libraries and establish settings
 **Task**: Make a code block and load janitor and the tidyverse
 
+```{r}
+# Turn off scientific notation
+options(scipen=999)
+
+# Load the tidyverse, janitor, rio
+
+library(tidyverse)
+
+library(janitor)
+
+library(rio)
+```
+
 ## Load data
+
+```{r}
+
+arcos <- read_csv("data/arcos.csv")
+
+county_pop_2014 <- read_csv("data/county_population_2014.csv") 
+
+state_pop_2014 <- read_csv("data/state_population_2014.csv")
+
+state_crosswalk <- read_csv("data/state_crosswalk.csv")
+
+```
 
 For today's lab, we are using the DEA's ARCOS database, which tracks shipments of opioids and other controlled substances from manufacturers to pharmacies.  As we will read this week, the Washington Post used this data to show which communities were flooded by opioids during the death and overdose crisis of the last two decades. 
 
@@ -30,6 +55,26 @@ There are four tables in the data folder.
 
 **Q1** Which county or city received the most total opioid pills per person? Add up all the pills between 2006 and 2014 when doing this calculation. How many total pills, and what was the per person rate?
 
+```{r}
+#have to group counties together 
+
+arcos_county <- arcos %>% 
+  group_by(countyfips,buyer_county,buyer_state) %>%
+  summarise(
+    total_pills = sum(total_pills)
+  ) %>%
+  inner_join(county_pop_2014, by=c("countyfips"="geoid")) %>%
+  mutate(pills_per_person = total_pills/total_population_2014) %>%
+  arrange(desc(pills_per_person))
+
+arcos_county
+
+
+# Norton City, Virginia is the pill capital with 2628.9 pills per person. 
+
+
+```
+
 **Q2_New** 
 Which U.S. state saw the highest percentage increase in opiod pills from 2006 to 2014? 
 
@@ -42,6 +87,14 @@ Which U.S. state saw the highest percentage increase in opiod pills from 2006 to
 
 --Write a sentence that could be dropped in as the lede of a news story from the finding in question two. 
 
+```{r}
 
-**Q3_For Tuesday. Not for March 7 Lab** Which U.S. state had the highest number of opioid pills per person for pills shipped in 2014? How many total pills, and what was the per person rate? How did that compare to Washington, D.C.?
 
+```
+
+**Q3** Which U.S. state had the highest number of opioid pills per person for pills shipped in 2014? How many total pills, and what was the per person rate? How did that compare to Washington, D.C.?
+
+```{r}
+
+
+```
