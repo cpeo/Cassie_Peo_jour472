@@ -70,7 +70,8 @@ arcos_county <- arcos %>%
 arcos_county
 
 
-# Norton City, Virginia is the pill capital with 2628.9 pills per person. 
+# Norton City, Virginia received the most total opioid pills per person with 2628.9 pills per person.
+# Manufacturers shipped more than 10 million opioid pills to Norton City, Virginia between 2006 and 2014. That represented 2629 opioid pills for every person who lived in the city, a higher rate than anywhere else in the U.S. 
 
 
 ```
@@ -81,16 +82,56 @@ Which U.S. state saw the highest percentage increase in opiod pills from 2006 to
 --Produce two tables, one for 2006 and one for 2014. In the 2006 table, rename the total to total_2006. In the 2014 table, rename the total to total_2014. 
 --Join the tables into a new table, arcos_combo
 --Your table must have the full name of the states. Join with the state crosswalk table
+
+```{r}
+total_2006 <- arcos %>%
+  filter(year==2006) %>%
+  rename(total_2006=total_pills)
+
+total_2014 <- arcos %>%
+  filter(year==2014) %>%
+  rename(total_2014=total_pills)
+
+arcos_combo <- total_2006 %>%
+  inner_join(total_2014, by=c("buyer_state","countyfips","buyer_county"))
+
+arcos_combo <- arcos_combo %>%
+  rename(state_abb = buyer_state)
+
+arcos_crosswalk <- arcos_combo %>%
+  inner_join(state_crosswalk, by="state_abb")
+```
+
 --Calculate the percentage change between 2006 and 2014
+
+```{r}
+#percent change:
+
+arcos_combo <- arcos_crosswalk %>%
+  select(buyer_county, state_name, total_2014, total_2006) %>%
+  mutate(pct_change=(total_2014-total_2006) / total_2006)
+```
+
 --Create one table with the top 5 states by percentage increase 
 --Create a second table with the 5 states with the lowest percentage increase.
+
+```{r}
+
+top_5 <- arcos_combo %>%
+  slice_max(pct_change, n=5)
+
+bottom_5 <- arcos_combo %>%
+  slice_min(pct_change, n=5)
+
+```
 
 --Write a sentence that could be dropped in as the lede of a news story from the finding in question two. 
 
 ```{r}
-
+# From 2006-2014, Knox, Missouri had the highest percentage increase in total opioid pills, with an increase of 361.2%, while Reagan, Texas had the lowest percent increase at -0.99%. 
 
 ```
+
 
 **Q3** Which U.S. state had the highest number of opioid pills per person for pills shipped in 2014? How many total pills, and what was the per person rate? How did that compare to Washington, D.C.?
 
