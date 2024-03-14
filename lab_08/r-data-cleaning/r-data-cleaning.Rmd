@@ -1,0 +1,31 @@
+---
+title: "r-datacleaning"
+author: "Cassie Peo"
+date: "2024-03-14"
+output: html_document
+---
+
+
+**Question #1: **
+Answer this question in English: Write in Elms
+
+You have a dataframe that contains population statistics for each of 24 counties in Maryland, and you want to group and summarize to determine the total population for the state. 
+
+The first three rows of the data look like this:
+
+state | county | population
+Maryland | PG | 1000000
+MD | Montgomery | 1100000
+md | Baltimore city | 900000
+
+What tidyverse method described in this lab would you use to clean the state column so that the group and summarization works properly. 
+
+You don't need to write code, just explain in English on ELMS.
+
+Answer:
+
+Since the table is for counties in Maryland, the state value will always be Maryland so you can mutate the state column and set it equal to "Maryland" so that it is consistent and you will be able to group and summarize. 
+
+counties <- counties %>%
+  mutate(state = "Maryland")
+  
